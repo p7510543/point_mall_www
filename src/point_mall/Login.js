@@ -30,7 +30,7 @@ class Login extends React.Component {
             'http://localhost:8003/o/token/',
             {
                 grant_type: 'password',
-                client_id: 'KHP0ipfUKERJ53OmNIC2LniuaVEZh3Kv6IY2kqEF',
+                client_id: 'NvjMqNgwY21pnKsYym4l6gzneYkTHWUb2VzltE2M',
                 username: this.state.username,
                 password: this.state.password
             }
