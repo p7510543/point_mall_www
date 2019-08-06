@@ -1,4 +1,4 @@
-import { decorate, observable, autorun } from 'mobx';
+import { decorate, observable } from 'mobx';
 
 let instance;
 class DataHelper {
@@ -43,12 +43,6 @@ class DataHelper {
 
 decorate(DataHelper, {
     authToken: observable
-});
-
-const helper = new DataHelper();
-
-autorun(() => {
-    console.log(helper.authToken);
 });
 
 export default DataHelper;
