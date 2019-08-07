@@ -16,7 +16,7 @@ class CartItems extends React.Component {
             items.push({
                 item_id: cartItem.item.id,
                 count: cartItem.count
-            })
+            });
         }
         axios.post(
             DataHelper.baseURL() + '/items/purchase/',
@@ -34,6 +34,11 @@ class CartItems extends React.Component {
         });
     }
 
+    clearItems = () => {
+        const { itemStore } = this.props;
+        itemStore.clearCartItems();
+    }
+
     render() {
         const { itemStore } = this.props;
         const items = itemStore.cartItems.map((cartItem) => {
@@ -48,6 +53,7 @@ class CartItems extends React.Component {
             <div id="container">
                 <h1>장바구니</h1>
                 <button onClick={this.purchase}>구입</button>
+                <button onClick={this.clearItems}>비우기</button>
                 <div id="item-list-container">
                     {items}
                 </div>
