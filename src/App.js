@@ -10,6 +10,7 @@ import ItemDetail from './point_mall/ItemDetail';
 import MyItems from './point_mall/MyItems';
 import CategoryItems from './point_mall/CategoryItems';
 import CartItems from './point_mall/CartItems';
+import ObserverTest from './ObserverTest';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/me/items" component={MyItems} />
           <Route exact path="/categories/:categoryId" component={CategoryItems} />
           <Route exact path="/cart/items" component={CartItems} />
+          <Route exact path="/observable-test" component={ObserverTest} />
         </Switch>
         <Footer/>
       </div>
