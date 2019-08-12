@@ -1,8 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { inject } from 'mobx-react';
 
-@inject('itemStore', 'httpService')
+@inject('itemStore', 'httpService', 'history')
 class ItemDetail extends React.Component {
 
     constructor(props) {
@@ -65,4 +64,4 @@ class ItemDetail extends React.Component {
     }
 }
 
-export default withRouter(ItemDetail);
+export default ItemDetail;

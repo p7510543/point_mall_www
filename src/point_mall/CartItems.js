@@ -1,9 +1,8 @@
 import React from 'react';
 import ItemBox from './ItemBox';
-import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
-@inject('itemStore', 'httpService')
+@inject('itemStore', 'httpService', 'history')
 @observer
 class CartItems extends React.Component {
 
@@ -51,4 +50,4 @@ class CartItems extends React.Component {
     }
 }
 
-export default withRouter(CartItems);
+export default CartItems;

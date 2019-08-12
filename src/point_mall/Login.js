@@ -1,8 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { inject } from 'mobx-react';
 
-@inject('authStore', 'httpService')
+@inject('authStore', 'httpService', 'history')
 class Login extends React.Component {
 
     constructor(props) {
@@ -61,4 +60,4 @@ class Login extends React.Component {
     }
 }
 
-export default withRouter(Login);
+export default Login;

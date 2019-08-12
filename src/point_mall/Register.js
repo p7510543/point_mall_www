@@ -1,8 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { inject } from 'mobx-react';
 
-@inject('httpService')
+@inject('httpService', 'history')
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -59,4 +58,4 @@ class Register extends React.Component {
     }
 }
 
-export default withRouter(Register);
+export default Register;

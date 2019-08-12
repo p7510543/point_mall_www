@@ -1,7 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import DataHelper from '../DataHelper';
+import { inject } from 'mobx-react';
 
+@inject('history')
 class ItemBox extends React.Component {
 
     goToItem = () => {
@@ -30,4 +31,4 @@ class ItemBox extends React.Component {
     }
 }
 
-export default withRouter(ItemBox);
+export default ItemBox;
