@@ -41,6 +41,8 @@ export default class HttpService {
                                 this.refreshSubscribers = [];
                                 this.authStore.deleteToken();
                                 reject(originalError);
+                                alert('need to login');
+                                this.rootStore.history.push('/login');
                             }).finally(() => {
                                 this.isRefreshingToken = false;
                             });
