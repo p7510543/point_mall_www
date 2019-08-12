@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Header from './point_mall/Header';
@@ -13,11 +13,11 @@ import CartItems from './point_mall/CartItems';
 import ObserverTest from './observer/ObserverTest';
 import Register from './point_mall/Register';
 
-function App() {
-  return (
-    <Router>
+class App extends React.Component {
+  render() {
+    return (
       <div>
-        <Header/>
+        <Header />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
@@ -28,10 +28,10 @@ function App() {
           <Route exact path="/cart/items" component={CartItems} />
           <Route exact path="/observer-test" component={ObserverTest} />
         </Switch>
-        <Footer/>
+        <Footer />
       </div>
-    </Router>
-  );
+    );
+  }
 }
 
 export default App;

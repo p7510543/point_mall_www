@@ -4,17 +4,22 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'mobx-react';
+import { Router } from 'react-router-dom';
 import RootStore from './RootStore';
 
 const rootStore = new RootStore();
 
 ReactDOM.render(
-    <Provider
-        authStore={rootStore.authStore}
-        itemStore={rootStore.itemStore}
-        httpService={rootStore.httpService}>
-        <App />
-    </Provider>,
+    <Router history={rootStore.history}>
+        <Provider
+            rootStore={rootStore}
+            authStore={rootStore.authStore}
+            itemStore={rootStore.itemStore}
+            httpService={rootStore.httpService}
+            history={rootStore.history}>
+            <App />
+        </Provider>
+    </Router>,
     document.getElementById('root')
 );
 

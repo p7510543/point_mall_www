@@ -10,7 +10,12 @@ export default class HttpService {
             console.log(response);
             return response;
         }, error => {
-            console.log(error);
+            const { response } = error;
+            console.log(response);
+            if (response.status === 401) {
+                alert('need to login');
+                this.rootStore.history.push('/login');
+            }
             return Promise.reject(error);
         });
     }
