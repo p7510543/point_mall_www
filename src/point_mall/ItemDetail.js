@@ -31,7 +31,10 @@ class ItemDetail extends React.Component {
         const { httpService } = this.props;
         httpService.purchaseItem(itemId)
             .then((response) => {
+                console.log(response);
                 this.props.history.push('/me/items');
+            }).catch(error => {
+                console.log(error.config);
             });
     }
 

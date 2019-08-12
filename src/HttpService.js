@@ -6,7 +6,10 @@ export default class HttpService {
     constructor(rootStore, baseUrl) {
         this.rootStore = rootStore;
         this.authStore = rootStore.authStore;
+
+        this.refreshSubscribers = [];
         this.isRefreshingToken = false;
+
         axios.defaults.baseURL = baseUrl;
 
         reaction(() => this.authStore.authToken, value => {
@@ -16,18 +19,42 @@ export default class HttpService {
         axios.interceptors.response.use(response => {
             console.log(response);
             return response;
-        }, error => {
-            const { config, response } = error;
+        }, originalError => {
+            const { config, response } = originalError;
             const originalRequest = config;
             if (response.status === 401) {
-                if (this.authStore.refreshToken != null && !this.isRefreshingToken) {
-                    this.isRefreshingToken = true;
-                    return new Promise(resolve => {
-                        this.refreshToken().then(token => {
-                            originalRequest.headers.Authorization = token.token_type + ' ' + token.access_token;
-                            resolve(axios(originalRequest));
-                        }).finally(() => {
-                            this.isRefreshingToken = false;
+                if (this.authStore.refreshToken != null) {
+                    if (!this.isRefreshingToken) {
+                        this.isRefreshingToken = true;
+                        return new Promise((resolve, reject) => {
+                            this.refreshToken().then(token => {
+                                this.refreshSubscribers.forEach(subscriber => {
+                                    subscriber(token);
+                                });
+                                this.refreshSubscribers = [];
+                                originalRequest.headers.Authorization = token.token_type + ' ' + token.access_token;
+                                resolve(axios(originalRequest));
+                            }).catch(error => {
+                                this.refreshSubscribers.forEach(subscriber => {
+                                    subscriber(null);
+                                });
+                                this.refreshSubscribers = [];
+                                this.authStore.deleteToken();
+                                reject(originalError);
+                            }).finally(() => {
+                                this.isRefreshingToken = false;
+                            });
+                        });
+                    }
+
+                    return new Promise((resolve, reject) => {
+                        this.refreshSubscribers.push(token => {
+                            if (token == null) {
+                                reject(originalError);
+                            } else {
+                                originalRequest.headers.Authorization = token.token_type + ' ' + token.access_token;
+                                resolve(axios(originalRequest));
+                            }
                         });
                     });
                 } else {
@@ -35,7 +62,7 @@ export default class HttpService {
                     this.rootStore.history.push('/login');
                 }
             }
-            return Promise.reject(error);
+            return Promise.reject(originalError);
         });
     }
 
