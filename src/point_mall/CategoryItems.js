@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import DataHelper from '../DataHelper';
 
 import ItemBox from './ItemBox';
+import { inject } from 'mobx-react';
 
+@inject('httpService')
 class CategoryItems extends React.Component {
 
     constructor(props) {
@@ -25,11 +25,10 @@ class CategoryItems extends React.Component {
 
     indexItems() {
         const categoryId = this.props.match.params.categoryId;
-        axios.get(DataHelper.baseURL() + '/categories/' + categoryId + '/items/')
-            .then((response) => {
-                const items = response.data;
+        this.props.httpService.indexCategoryItems(categoryId)
+            .then(items => {
                 this.setState({
-                    items: items
+                    items
                 });
             });
     }

@@ -1,10 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { inject } from 'mobx-react';
-import DataHelper from '../DataHelper';
 
-@inject('authStore')
+@inject('authStore', 'httpService')
 class Login extends React.Component {
 
     constructor(props) {
@@ -29,20 +27,13 @@ class Login extends React.Component {
     }
 
     login = () => {
-        axios.post(
-            DataHelper.baseURL() + '/o/token/',
-            {
-                grant_type: 'password',
-                client_id: 'L5EJWpimAOYOidk29pdoJyu2pdNjPkrHdpjeT2Vq',
-                username: this.state.username,
-                password: this.state.password
-            }
-            ).then((response) => {
-                const token = response.data;
-                const { authStore, history } = this.props;
-                authStore.setToken(token);
-                history.push('/');
-            });
+        this.props.httpService.login(
+            this.state.username,
+            this.state.password
+        ).then(token => {
+            const { history } = this.props;
+            history.push('/');
+        });
     }
 
     render() {
