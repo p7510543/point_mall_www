@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { inject } from 'mobx-react';
 
 class ItemBox extends React.Component {
 
