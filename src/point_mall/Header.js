@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 
-@inject('httpService', 'authStore', 'itemStore')
+@inject('httpService', 'authStore', 'itemStore', 'history')
 @observer
 class Header extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            searchText: '',
             categories: []
         };
     }
@@ -29,6 +30,19 @@ class Header extends React.Component {
     logout = () => {
         const { authStore } = this.props;
         authStore.deleteToken();
+    }
+
+    onInputChanged = (event) => {
+        const target = event.target;
+        if (target.name === 'search') {
+            this.setState({
+                searchText: target.value
+            });
+        }
+    }
+
+    search = () => {
+        this.props.history.push('/tags/' + this.state.searchText);
     }
 
     render() {
@@ -58,6 +72,13 @@ class Header extends React.Component {
                             <button onClick={this.logout}>Logout</button> :
                             <Link to="/login">Login</Link>
                     }
+                    <input
+                        style={{marginLeft: '1em'}}
+                        value={this.state.searchText}
+                        onChange={this.onInputChanged}
+                        type="text"
+                        name="search"/>
+                    <button onClick={this.search}>Search</button>
                 </div>
             </header>
         );
