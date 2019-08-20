@@ -154,6 +154,20 @@ class HttpService {
             return token;
         });
     }
+
+    indexHistory() {
+        return axios.get('/histories/')
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    refundHistory(historyId) {
+        return axios.post('/histories/' + historyId + '/refund/')
+            .then(response => {
+                return response.data;
+            });
+    }
 }
 
 export default HttpService;
