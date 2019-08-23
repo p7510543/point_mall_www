@@ -6,11 +6,11 @@ class HttpService {
         this.rootStore = rootStore;
         this.authStore = rootStore.authStore;
 
-        this.clientID = 'L5EJWpimAOYOidk29pdoJyu2pdNjPkrHdpjeT2Vq';
+        this.clientID = 'HyZqNb3eUjq3jsLCwjuyibSK5ntJk3vaNZTCmfwi';
         this.refreshSubscribers = [];
         this.isRefreshingToken = false;
 
-        axios.defaults.baseURL = 'http://localhost:8003';
+        axios.defaults.baseURL = 'http://api.pointmall.upos.kr';
         axios.defaults.headers.common['Authorization'] = this.authStore.authToken;
 
         reaction(() => this.authStore.authToken, () => {
