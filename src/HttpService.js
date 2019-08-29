@@ -10,7 +10,7 @@ class HttpService {
         this.refreshSubscribers = [];
         this.isRefreshingToken = false;
 
-        axios.defaults.baseURL = 'http://api.pointmall.upos.kr';
+        axios.defaults.baseURL = 'https://api.pointmall.upos.kr';
         axios.defaults.headers.common['Authorization'] = this.authStore.authToken;
 
         reaction(() => this.authStore.authToken, () => {
